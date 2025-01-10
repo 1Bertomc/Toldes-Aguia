@@ -1,64 +1,46 @@
-function calcularFerros(comprimento, largura) {
-  // Cálculos de perímetro e laterais
-  const perimetro = 2 * (comprimento + largura);
-  const laterais = Math.floor(perimetro / 6);
+const form = document.getElementById('tenda-form');
+const resultados = document.getElementById('resultados');
 
-  // Cálculos de ferros laterais
-  const ferrosLaterais = Math.floor(comprimento / 3) + 1;
-  const ferrosLateraisTotais = ferrosLaterais * 2; // 2 lados
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    resultados.innerHTML = "";
 
-  // Cálculos de ferros do meio
-  const ferrosMeio = Math.floor(comprimento / 3) + 1;
+    const comprimento = parseFloat(document.getElementById('comprimento').value);
+    const largura = parseFloat(document.getElementById('largura').value);
+    const origem = document.getElementById('origem').value;
+    const destino = document.getElementById('destino').value;
 
-  // Cálculos de ferros de apoio
-  const ferrosApoio = Math.floor((largura / 12) * 4);
+    const ferrosLaterais = Math.floor(comprimento / 3) + 1;
+    const totalFerros = ferrosLaterais * 2;
+    const ferrosMeio = ferrosLaterais;
 
-  // Resultados
-  return {
-    laterais: laterais,
-    ferrosLateraisTotais: ferrosLateraisTotais,
-    ferrosMeio: ferrosMeio,
-    ferrosApoio: ferrosApoio,
-  };
-}
+    const perimetro = 2 * (comprimento + largura);
+    const laterais = Math.ceil(perimetro / 6);
 
-function calcularPreco(comprimento, largura) {
-  // Tabela de preços
-  const precos = {
-    "9x7.5": 400,
-    "10x7.5": 500,
-    "15x7.5": 700,
-    "21x7.5": 800,
-    "12x12": 800,
-    "15x12": 900,
-    "18x12": 1100,
-    "21x12": 1200,
-    "30x11": 1350,
-    "30x12": 1500,
-    "42x12": 2100,
-    "45x12": 2200,
-    "51x12": 2400,
-    "60x12": 2600,
-    "15x24": 1600,
-    "21x24": 2200,
-    "30x24": 2600
-  };
+    // Distância usando DistanceMatrix API
+    const apiKey = "hDbbhskqnl0WO10paSwbcTe28w8x6sZGCL0qWwLC3MjWNn50XhXJaSapuj76q9kK";
+    const url = `https://api.distancematrix.ai/maps/api/distancematrix/json?origins=${origem}&destinations=${destino}&key=${apiKey}`;
 
-  const chave = `${comprimento}x${largura}`;
-  return precos[chave] || "Sob Orçamento";
-}
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
 
-function calcular() {
-  const comprimento = parseFloat(document.getElementById('comprimento').value);
-  const largura = parseFloat(document.getElementById('largura').value);
+        if (data.rows[0].elements[0].status === "OK") {
+            const distancia = data.rows[0].elements[0].distance.value / 1000;
+            const custoViagem = (distancia * 0.25) * 4;
 
-  const resultado = calcularFerros(comprimento, largura);
-  const preco = calcularPreco(comprimento, largura);
-
-  document.getElementById('resultado-laterais').textContent = `Laterais: ${resultado.laterais}`;
-  document.getElementById('resultado-ferros-laterais').textContent = `Ferros Laterais Totais: ${resultado.ferrosLateraisTotais}`;
-  document.getElementById('resultado-ferros-meio').textContent = `Ferros do Meio: ${resultado.ferrosMeio}`;
-  document.getElementById('resultado-ferros-apoio').textContent = `Ferros de Apoio: ${resultado.ferrosApoio}`;
-  document.getElementById('resultado-preco').textContent = `Preço: ${preco} €`;
-}
-
+            resultados.innerHTML = `
+                <h3>Resultados</h3>
+                <p><strong>Total de Ferros Laterais:</strong> ${totalFerros}</p>
+                <p><strong>Total de Ferros do Meio:</strong> ${ferrosMeio}</p>
+                <p><strong>Quantidade de Laterais:</strong> ${laterais}</p>
+                <p><strong>Distância:</strong> ${distancia.toFixed(2)} km</p>
+                <p><strong>Custo da Viagem:</strong> €${custoViagem.toFixed(2)}</p>
+            `;
+        } else {
+            resultados.innerHTML = `<p>Erro ao calcular a distância.</p>`;
+        }
+    } catch (error) {
+        resultados.innerHTML = `<p>Erro: ${error.message}</p>`;
+    }
+});
