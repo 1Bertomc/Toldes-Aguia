@@ -59,6 +59,6 @@ function calcular() {
   document.getElementById('resultado-ferros-laterais').textContent = `Ferros Laterais Totais: ${resultado.ferrosLateraisTotais}`;
   document.getElementById('resultado-ferros-meio').textContent = `Ferros do Meio: ${resultado.ferrosMeio}`;
   document.getElementById('resultado-ferros-apoio').textContent = `Ferros de Apoio: ${resultado.ferrosApoio}`;
-  document.getElementById('resultado-preco').textContent = `Preço: ${preco}`;
+  document.getElementById('resultado-preco').textContent = `Preço: ${preco} €`;
 }
 
