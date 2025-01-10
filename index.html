@@ -1,30 +1,29 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calculadora de Ferros para Tenda</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tendas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Calculadora de Ferros para Tenda</h1>
-  
-  <label for="comprimento">Comprimento (m):</label>
-  <input type="number" id="comprimento" placeholder="Comprimento">
-  
-  <label for="largura">Largura (m):</label>
-  <input type="number" id="largura" placeholder="Largura">
-  
-  <button onclick="calcular()">Calcular</button>
-  
-  <div id="resultado">
-    <p id="resultado-laterais"></p>
-    <p id="resultado-ferros-laterais"></p>
-    <p id="resultado-ferros-meio"></p>
-    <p id="resultado-ferros-apoio"></p>
-    <p id="resultado-preco"></p>
-  </div>
-
-  <script src="app.js"></script>
+    <h1>Calculadora de Tendas</h1>
+    <form id="tenda-form">
+        <label for="comprimento">Comprimento (m):</label>
+        <input type="number" id="comprimento" required>
+        
+        <label for="largura">Largura (m):</label>
+        <input type="number" id="largura" required>
+        
+        <label for="origem">Origem:</label>
+        <input type="text" id="origem" required>
+        
+        <label for="destino">Destino:</label>
+        <input type="text" id="destino" required>
+        
+        <button type="submit">Calcular</button>
+    </form>
+    <div id="resultados"></div>
+    <script src="script.js"></script>
 </body>
 </html>
