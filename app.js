@@ -4,7 +4,7 @@ function calcularFerros(comprimento, largura) {
   const laterais = perimetro / 6;
 
   // Cálculos de ferros laterais
-  const ferrosLaterais = (comprimento / 3) + 1;
+  const Math.ceil(ferrosLaterais = (comprimento / 3) + 1);
   const ferrosLateraisTotais = ferrosLaterais * 2;  // 2 lados
 
   // Cálculos de ferros do meio
