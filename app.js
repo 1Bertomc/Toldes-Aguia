@@ -28,7 +28,7 @@ function calcular() {
   
   const resultado = calcularFerros(comprimento, largura);
 
-  document.getElementById('resultado-laterais').textContent = `Laterais: ${resultado.laterais} metros`;
+  document.getElementById('resultado-laterais').textContent = `Laterais: ${resultado.laterais} Laterais`;
   document.getElementById('resultado-ferros-laterais').textContent = `Ferros Laterais: ${resultado.ferrosLateraisTotais}`;
   document.getElementById('resultado-ferros-meio').textContent = `Ferros do Meio: ${resultado.ferrosMeio}`;
   document.getElementById('resultado-ferros-apoio').textContent = `Ferros de Apoio: ${resultado.ferrosApoio}`;
